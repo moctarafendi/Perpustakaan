@@ -1,0 +1,122 @@
+﻿@using Perpustakaan.Helpers
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+
+    var books = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<List<Book>>("ShoppingCart");
+    var iChart = 0;
+    if (books != null && books.Any())
+    {
+        iChart = books.Count();
+    }
+}
+@if (User.IsInRole("Admin"))
+{
+    <ul class="nav navbar-nav">
+        <li>
+            <a asp-controller="Home" asp-action="DaftarBuku">Daftar Buku</a>
+        </li>
+        <li>
+            <a asp-controller="Home" asp-action="DisplayHistory">History Peminjaman Buku</a>
+        </li>
+        <li>
+            <a id="myOrder" asp-controller="Home" asp-action="DisplayMyOrder">My Order(@iChart)</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="btn-group nav">
+            <button type="button" class="btn navbar-btn"
+                    style="background-color:forestgreen">
+                @User.Identity.Name
+            </button>
+            <button type="button"
+                    class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li> <a asp-controller="Users" asp-action="Index">User</a></li>
+                <li> <a asp-controller="Categories" asp-action="Index">Kategori Buku</a></li>
+                <li> <a asp-controller="Books" asp-action="Index">Buku</a></li>
+                <li> <a asp-controller="Books" asp-action="DaftarPeminjam">Pengembalian Buku</a></li>
+                <li> <a asp-controller="Login" asp-action="ChangePassword">Change Password</a></li>
+            </ul>
+        </li>
+        <li>
+            <a asp-controller="Login" asp-action="LogOff">
+                Log off
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+        </li>
+
+    </ul>
+}
+else if (User.IsInRole("Staff"))
+{
+    <ul class="nav navbar-nav">
+        <li>
+            <a asp-controller="Home" asp-action="DaftarBuku">Daftar Buku</a>
+        </li>
+        <li>
+            <a asp-controller="Home" asp-action="DisplayHistory">History Peminjaman Buku</a>
+        </li>
+        <li>
+            <a id="myOrder" asp-controller="Home" asp-action="DisplayMyOrder">My Order(@iChart)</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="btn-group nav">
+            <button type="button" class="btn navbar-btn" style="background-color:forestgreen">@User.Identity.Name</button>
+            <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li> <a asp-controller="Home" asp-action="">Buku</a></li>
+                <li> <a asp-controller="Books" asp-action="DaftarPeminjam">Pengembalian Buku</a></li>
+                <li> <a asp-controller="Login" asp-action="ChangePassword">Change Password</a></li>
+            </ul>
+        </li>
+        <li>
+            <a asp-controller="Login" asp-action="LogOff">
+                Log off
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+        </li>
+
+    </ul>
+
+}
+else if (User.IsInRole("General"))
+{
+    <ul class="nav navbar-nav">
+        <li>
+            <a asp-controller="Home" asp-action="DaftarBuku">Daftar Buku</a>
+        </li>
+        <li>
+            <a asp-controller="Home" asp-action="DisplayHistory">History Peminjaman Buku</a>
+        </li>
+        <li>
+            <a id="myOrder" asp-controller="Home" asp-action="DisplayMyOrder">My Order(@iChart)</a>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="btn-group nav">
+            <button type="button" class="btn navbar-btn" style="background-color:forestgreen">@User.Identity.Name</button>
+            <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li> <a asp-controller="Login" asp-action="ChangePassword">Change Password</a></li>
+            </ul>
+        </li>
+        <li>
+            <a asp-controller="Login" asp-action="LogOff">
+                Log off
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+        </li>
+
+    </ul>
+}
